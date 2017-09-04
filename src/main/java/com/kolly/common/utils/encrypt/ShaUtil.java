@@ -1,4 +1,4 @@
-package com.kolly.common.utils;
+package com.kolly.common.utils.encrypt;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

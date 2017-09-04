@@ -1,4 +1,4 @@
-package com.kolly.common.utils;
+package com.kolly.common.utils.encrypt;
 
 import org.springframework.util.Base64Utils;
 

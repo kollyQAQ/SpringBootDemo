@@ -1,4 +1,4 @@
-package com.kolly.common.utils;
+package com.kolly.common.utils.encrypt;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,8 +6,6 @@ import org.springframework.util.CollectionUtils;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,25 +54,18 @@ public class Md5Util {
 
 	public static String encryptMap(Map<String, String> map, String key) {
 
-		logger.info("Md5Util.encryptMap map:{} key:{}", map.toString(), key);
-
 		if (map == null || CollectionUtils.isEmpty(map) || key == null || key.length() == 0) {
 			return null;
 		}
 
-		ArrayList<String> lst = new ArrayList<>();
-		lst.addAll(map.keySet());
-
-		Collections.sort(lst, new Comparator<String>() {
-			public int compare(String o1, String o2) {
-				return o1.compareTo(o2);
-			}
-		});
+		ArrayList<String> list = new ArrayList<>();
+		list.addAll(map.keySet());
+		list.sort((o1, o2) -> o1.compareTo(o2));
 
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < lst.size(); i++) {
-			String k = lst.get(i);
+		for (int i = 0; i < list.size(); i++) {
+			String k = list.get(i);
 			String v = map.get(k);
 			sb.append(k).append("=").append(v).append("&");
 		}
