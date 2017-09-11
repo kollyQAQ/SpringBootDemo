@@ -40,10 +40,10 @@ public class ZhihuQuestionProcesser implements PageProcessor {
 	private static String filePath = "D:\\zhihuSpider\\";
 
 	//抓取问题的Id
-	private static String questionId = "20902967";
+	private static String questionId = "42056525";
 
 	//抓取回答要求的最低赞数量
-	private static int voteMin = 100;
+	private static int voteMin = 50;
 
 	public static void main(String[] args) {
 		Spider.create(new ZhihuQuestionProcesser())

@@ -11,6 +11,56 @@
         </encoder>
     </appender>
 
+    <!-- 访问日志 -->
+    <appender name="access" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${path}/access/access.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%date{HH:mm:ss.SSS}] [%thread] [%-5level] [%logger{36}] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 运行日志 -->
+    <appender name="run" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${path}/run.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%date{HH:mm:ss.SSS}] [%thread] [%-5level] [%logger{36}] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 错误日志 -->
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${path}/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%date{HH:mm:ss.SSS}] [%thread] [%-5level] [%logger{36}] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 批量日志 -->
+    <logger name="com.kolly" level="INFO"  additivity="true">
+        <appender-ref ref="run"/>
+        <appender-ref ref="error"/>
+    </logger>
+
+    <!-- 访问日志 -->
+    <logger name="access" level="INFO" additivity="false">
+        <appender-ref ref="access"/>
+    </logger>
+
     <root level="INFO">
         <appender-ref ref="console"/>
     </root>

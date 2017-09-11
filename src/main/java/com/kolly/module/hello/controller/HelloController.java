@@ -1,6 +1,6 @@
 package com.kolly.module.hello.controller;
 
-import com.kolly.module.hello.po.User;
+import com.kolly.module.user.po.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +17,6 @@ public class HelloController {
 
 	@RequestMapping("/getUser")
 	public User getUser() {
-		return new User("kolly", 23);
+		return new User("kolly", "123");
 	}
 }
