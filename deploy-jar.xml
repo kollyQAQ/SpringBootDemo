@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jweb_wb_mgmt" default="publish_mgmt_idc" basedir=".">
+
+	<tstamp prefix="ft">
+		<format property="endfix" locale="zh,CN" pattern="yyyyMMdd-HHmmss" />
+	</tstamp>
+
+	<tstamp>
+		<format property="TODAY_CN" pattern="yyyy-MM-dd HH:mm:ss" locale="zh" />
+	</tstamp>
+
+	<target name="mvn_build">
+		<exec executable="cmd.exe">
+			<arg line="/c mvn clean package -Dmaven.test.skip=true" />
+		</exec>
+	</target>
+
+    <target name="scp-mgmt">
+		<sequential>
+
+            <echo>start publish IDC</echo>
+            <scp file="target/jweb-wb-mgmt-udo-1.0.0.jar"
+                 todir="appadmin@219.133.34.10:/usr/local/jweb/jweb_wb_mgmt/webapps/ROOT/WEB-INF/lib/jweb-wb-mgmt-udo-1.0.0.jar"
+                 port="62220" password="qaoock6VDQGX" trust="true"/>
+            <echo>Finish publish IDC</echo>
+            <echo message="${TODAY_CN}"/>
+
+		</sequential>
+	</target>
+
+    <target name="publish_mgmt_idc" depends="mvn_build, scp-mgmt"/>
+
+</project>
