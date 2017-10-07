@@ -21,11 +21,6 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 	private static Long threadCount = 0L;
 
 	/**
-	 * 因为interceptor是单例的,用ThreadLocal类记录线程请求开始时间
-	 */
-	private ThreadLocal<Long> requestBeginTime = new ThreadLocal<>();
-
-	/**
 	 * Log the request entrance
 	 */
 	@Override
@@ -33,7 +28,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 
 		incThread();
-		AppThreadData.SetthreadStartTime(System.currentTimeMillis());
+		AppThreadData.setthreadStartTime(System.currentTimeMillis());
 		AppThreadData.getTimerLogger().reset();
 
 		StringBuilder sb = new StringBuilder();

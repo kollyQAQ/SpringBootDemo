@@ -296,5 +296,8 @@ public class RestClient {
 		return new HttpEntity<>(formEntity, headers);
 	}
 
+	public static void main(String[] args) {
+
+	}
 
 }

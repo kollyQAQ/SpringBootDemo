@@ -370,7 +370,7 @@ public class RSAEncrypt {
 		map.put("commodityName", "扫码购买龙石");
 		map.put("subMerNo", "0000001");
 		map.put("subMerName", "任网游内部");
-		String sha1Digest = ShaUtil.shaSign(map, "UTF-8").toLowerCase();
+		String sha1Digest = Sha1Util.encryptMap(map).toLowerCase();
 		String signstr = RSASignature.sign(sha1Digest, RSAEncrypt.loadPrivateKeyByFile(filepath));
 		System.out.println("BASE64加密结果：" + signstr);
 		System.out.println();

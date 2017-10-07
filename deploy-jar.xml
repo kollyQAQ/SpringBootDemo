@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="jweb_wb_mgmt" default="publish_mgmt_idc" basedir=".">
+<project name="springbootDemo" default="publish" basedir=".">
 
 	<tstamp prefix="ft">
 		<format property="endfix" locale="zh,CN" pattern="yyyyMMdd-HHmmss" />
@@ -15,19 +15,23 @@
 		</exec>
 	</target>
 
-    <target name="scp-mgmt">
+    <target name="scp">
 		<sequential>
-
             <echo>start publish IDC</echo>
-            <scp file="target/jweb-wb-mgmt-udo-1.0.0.jar"
-                 todir="appadmin@219.133.34.10:/usr/local/jweb/jweb_wb_mgmt/webapps/ROOT/WEB-INF/lib/jweb-wb-mgmt-udo-1.0.0.jar"
-                 port="62220" password="qaoock6VDQGX" trust="true"/>
+            <scp file="target/springbootdemo-0.0.1-SNAPSHOT.jar"
+                 todir="root@123.207.38.102:/root/springbootdemo-0.0.1-SNAPSHOT.jar"
+                 port="22" password="Root@123" trust="true"/>
             <echo>Finish publish IDC</echo>
             <echo message="${TODAY_CN}"/>
-
 		</sequential>
 	</target>
 
-    <target name="publish_mgmt_idc" depends="mvn_build, scp-mgmt"/>
+    <target name="restart">
+        <echo> === Restart ===</echo>
+        <sshexec host="123.207.38.102" port="22" username="root" password="Root@123"
+                 command="sh /root/goSpringBoot.sh" trust="true"/>
+    </target>
+
+    <target name="publish" depends="mvn_build, scp"/>
 
 </project>

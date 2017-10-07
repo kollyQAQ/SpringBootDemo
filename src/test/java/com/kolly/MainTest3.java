@@ -17,7 +17,7 @@ import java.util.Map;
 public class MainTest3 {
 
 	public static void main(String[] args) throws Exception {
-		for (int i = 0; i < 80; i++) {
+		for (int i = 0; i < 100; i++) {
 			String url = "http://aliyun.wechatpen.com/microvote/handler/AppVoteHandler.ashx";
 			HttpHeaders headers = new HttpHeaders();
 			List<String> cookies = new ArrayList<>();

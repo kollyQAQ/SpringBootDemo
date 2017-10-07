@@ -4,6 +4,7 @@ package com.kolly.module.cache.dao;
 import com.kolly.common.annotation.MyBatisRepository;
 import com.kolly.module.cache.po.GMConfig;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 

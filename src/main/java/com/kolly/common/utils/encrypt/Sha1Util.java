@@ -2,86 +2,88 @@ package com.kolly.common.utils.encrypt;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
-import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 
-public class ShaUtil {
+public class Sha1Util {
 
-	private static final Logger logger = LoggerFactory.getLogger(ShaUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(Sha1Util.class);
 
-	private static final String SHA = "SHA1";
+	public static String encryptString(String oriStr) {
 
-	public static String encrypt(byte[] value) {
-		if (value == null)
-			return "";
-
-		MessageDigest md = null;
-		String strDes = null;
+		logger.info("Sha1Util.encryptString oriStr:{}", oriStr);
 
 		try {
-			md = MessageDigest.getInstance(SHA);
-			md.update(value);
-			strDes = bytes2Hex(md.digest()); // to HexString
-		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException(e);
+			// 生成一个SHA1加密计算摘要
+			MessageDigest md = MessageDigest.getInstance("SHA1");
+
+			// 计算sha1函数
+			md.update(oriStr.getBytes());
+
+			// digest()最后确定返回md5 hash值，返回值为8为字符串
+			// 因为sha1 hash值是16位的hex值，实际上就是8位的字符
+			// BigInteger函数则将8位的字符串转换成16位hex值，用字符串来表示；得到字符串形式的hash值
+			String md5 = new BigInteger(1, md.digest()).toString(16);
+
+			logger.info("Sha1Util.encryptString md5:{}", md5);
+			return md5;
+
+		} catch (Exception e) {
+			logger.error("Error occur during Sha1Util.encrypt", e);
 		}
-		return strDes;
+
+		return null;
 	}
 
-	public static String bytes2Hex(byte[] byteArray) {
-		StringBuffer strBuf = new StringBuffer();
-		String tmp = null;
-		for (int i = 0; i < byteArray.length; i++) {
-			tmp = Integer.toHexString(byteArray[i] & 0xFF);
-			if (tmp.length() == 1) {
-				strBuf.append("0");
-			}
-			strBuf.append(tmp);
+	public static String encryptMap(Map<String, String> map) {
+
+		if (map == null || CollectionUtils.isEmpty(map)) {
+			return null;
 		}
-		return strBuf.toString();
+
+		ArrayList<String> list = new ArrayList<>();
+		list.addAll(map.keySet());
+		//list.sort((o1, o2) -> o1.compareTo(o2));
+
+		StringBuilder sb = new StringBuilder();
+		for (String k : list) {
+			sb.append(k).append("=").append(map.get(k)).append("&");
+		}
+
+		return encryptString(sb.toString().substring(0, sb.toString().length() - 1));
 	}
 
-	public static String shaSign(Map<String, String> map, String charset) {
+	public static String encryptMapWithKey(Map<String, String> map, String key) {
 
-		ArrayList<String> lst = new ArrayList<String>();
-		String s = "";
-		for (String k : map.keySet()) {
-			lst.add(k);
+		if (map == null || CollectionUtils.isEmpty(map) || key == null || key.length() == 0) {
+			return null;
 		}
 
-		Collections.sort(lst, new Comparator<String>() {
-			public int compare(String o1, String o2) {
-				return o1.compareTo(o2);
-			}
-		});
+		ArrayList<String> list = new ArrayList<>();
+		list.addAll(map.keySet());
+		//list.sort((o1, o2) -> o1.compareTo(o2));
 
-		for (int i = 0; i < lst.size(); i++) {
-			String k = lst.get(i);
-			String v = map.get(k);
-			s += k + "=" + v + "&";
+		StringBuilder sb = new StringBuilder();
+		for (String k : list) {
+			sb.append(k).append("=").append(map.get(k)).append("&");
 		}
-		if (s.endsWith("&")) {
-			s = s.substring(0, s.length() - 1);
-		}
-		String sign = "";
-		try {
-			logger.info("待SHA1加密字符串:" + s);
-			sign = encrypt(s.getBytes(charset)).toUpperCase();
-		} catch (UnsupportedEncodingException e) {
-			logger.error("Error occurs during sha1 encrypt", e);
-		}
-		logger.info("SHA1加密结果：" + sign);
-		return sign;
+		sb.append("key=").append(key);
+
+		return encryptString(sb.toString());
 	}
 
-	public static void main(String[] args) throws UnsupportedEncodingException {
-		String s = "abc";
-		System.out.println(encrypt(s.getBytes("utf8")).toUpperCase());
+	public static void main(String[] args) {
+		System.out.println(Sha1Util.encryptString("123456"));
+		Map<String, String> map = new HashMap<>();
+		map.put("name", "kolly");
+		map.put("age", "12");
+		map.put("school", "beijing");
+		System.out.println(Sha1Util.encryptMap(map));
+		System.out.println(Sha1Util.encryptMapWithKey(map, "eikdfnk234123"));
 	}
 }

@@ -1,6 +1,5 @@
 package com.kolly.module.spider;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import us.codecraft.webmagic.Page;
@@ -75,9 +74,9 @@ public class ZhihuQuestionProcesser implements PageProcessor {
 				String answerNo = answerUrl.substring(answerUrl.lastIndexOf("/"));
 				String questionTitle = page.getHtml().xpath("//h1[@class=QuestionHeader-title]/text()").toString();
 				List<String> urlList = page.getHtml().xpath("//div[@class=RichContent-inner]//img/@src").all();
-				urlList.forEach(url -> downloadPicture(url, filePath + questionTitle + questionId,
-						answerNo + "-" + RandomStringUtils.random(4, false, true) + url.substring(url.lastIndexOf(".")))
-				);
+				//urlList.forEach(url -> downloadPicture(url, filePath + questionTitle + questionId,
+				//		answerNo + "-" + RandomStringUtils.random(4, false, true) + url.substring(url.lastIndexOf(".")))
+				//);
 			}
 		} else {
 			//将回答url放入Downloader

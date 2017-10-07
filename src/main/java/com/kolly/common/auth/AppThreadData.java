@@ -24,7 +24,7 @@ public class AppThreadData {
 		return threadStartTime.get();
 	}
 
-	public static void SetthreadStartTime(long time) {
+	public static void setthreadStartTime(long time) {
 		threadStartTime.set(time);
 	}
 }
