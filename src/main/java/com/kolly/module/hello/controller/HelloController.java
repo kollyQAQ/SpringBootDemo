@@ -1,12 +1,15 @@
 package com.kolly.module.hello.controller;
 
+import com.kolly.common.BasicResult;
 import com.kolly.common.utils.restful.RestClient;
 import com.kolly.module.user.po.User;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -69,9 +72,14 @@ public class HelloController {
 
 	}
 
-	@RequestMapping("/getUser")
-	public User getUser() {
-		return new User("kolly", "123");
+	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
+	public BasicResult getUser() {
+		return BasicResult.createSuccResult().addData("user", new User("kolly", "123456"));
+	}
+
+	@RequestMapping(value = "/postUser", method = RequestMethod.POST)
+	public BasicResult postUser(@RequestHeader String name, @RequestParam String token) {
+		return BasicResult.createSuccResult().addData("user", new User(name, token));
 	}
 
 	@RequestMapping("/wx")

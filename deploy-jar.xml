@@ -19,8 +19,8 @@
 		<sequential>
             <echo>start publish IDC</echo>
             <scp file="target/springbootdemo-0.0.1-SNAPSHOT.jar"
-                 todir="root@123.207.38.102:/root/springbootdemo-0.0.1-SNAPSHOT.jar"
-                 port="22" password="Root@123" trust="true"/>
+                 todir="appadmin@10.135.138.127:/home/appadmin/springboot/springbootdemo-0.0.1-SNAPSHOT.jar"
+                 port="60755" password="App@idc23" keyfile="d://appadmin" trust="true"/>
             <echo>Finish publish IDC</echo>
             <echo message="${TODAY_CN}"/>
 		</sequential>
