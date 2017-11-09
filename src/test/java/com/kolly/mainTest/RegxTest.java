@@ -1,4 +1,4 @@
-package com.kolly;
+package com.kolly.mainTest;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 /**
  * Created by kolly on 2017/9/7.
  */
-public class MainTest2 {
+public class RegxTest {
 
 	public static void main(String args[]) {
 

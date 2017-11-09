@@ -1,4 +1,4 @@
-package com.kolly;
+package com.kolly.mainTest;
 
 import com.kolly.common.utils.restful.RestClient;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -13,8 +13,9 @@ import java.util.Map;
 
 /**
  * Created by kolly on 2017/9/11.
+ * 刷票程序
  */
-public class MainTest3 {
+public class BallotTest {
 
 	public static void main(String[] args) throws Exception {
 		for (int i = 0; i < 100; i++) {
